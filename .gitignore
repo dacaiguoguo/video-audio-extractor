@@ -1,0 +1,44 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+/.pnp
+.pnp.js
+
+# Production build
+.next/
+
+# Static file cache (can be generated during export or runtime)
+out/
+
+# Testing files
+coverage/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Next.js TypeScript build artifacts
+*.tsbuildinfo
+
+# npm package lock file if using Yarn
+package-lock.json
+
+# Editor and OS-specific files
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore build outputs (if you use Docker or other CI/CD tools)
+dist/
+/uploads
