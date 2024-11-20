@@ -7,14 +7,16 @@ import { fetchFile, toBlobURL } from '@ffmpeg/util';
 export default function Home() {
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const ffmpegRef = useRef(new FFmpeg());
+  const ffmpegRef = useRef<FFmpeg | null>(null);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
+    ffmpegRef.current = new FFmpeg();
     load();
   }, []);
 
   const load = async () => {
+    if (!ffmpegRef.current) return;
     setIsLoading(true);
     const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';
     const ffmpeg = ffmpegRef.current;
@@ -40,6 +42,7 @@ export default function Home() {
       setIsLoading(true);
       
       const ffmpeg = ffmpegRef.current;
+      if (!ffmpeg) return;
       const inputFileName = 'input.' + file.name.split('.').pop();
       const outputFileName = 'output.mp3';
       
