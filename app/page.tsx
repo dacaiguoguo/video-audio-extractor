@@ -72,7 +72,7 @@ export default function Home() {
       a.click();
       document.body.removeChild(a);
       
-      setMessage('Conversion completed!');
+      setMessage('');
     } catch (error) {
       console.error(error);
       setMessage('Conversion failed: ' + error);
