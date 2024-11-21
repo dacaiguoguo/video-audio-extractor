@@ -39,7 +39,7 @@ export default function Home() {
     if (!file) return;
 
     try {
-      setMessage('开始转换...');
+      setMessage('Converting...');
       setIsLoading(true);
       
       const ffmpeg = ffmpegRef.current;
@@ -129,9 +129,16 @@ export default function Home() {
       </header>
 
       {/* Hero Section with Background */}
-      <div className="relative w-full h-screen flex items-center justify-center bg-pink-50 overflow-hidden">
+      <div className="relative w-full min-h-screen flex flex-col justify-start bg-pink-50">
+        {/* Background Image */}
         <div className="absolute inset-0 z-0">
-          <svg className="w-full h-full opacity-10" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <div className="absolute inset-0 bg-[url('/images/hero-bg.jpg')] bg-cover bg-center"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-pink-50/90 to-white/90 backdrop-blur-[2px]"></div>
+        </div>
+        
+        {/* Grid Pattern Overlay */}
+        <div className="absolute inset-0 z-0 opacity-5">
+          <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
             <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
               <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" strokeWidth="0.5"/>
             </pattern>
@@ -140,8 +147,8 @@ export default function Home() {
         </div>
         
         {/* Hero Content */}
-        <div className="relative z-10 max-w-3xl px-6 py-16 md:py-24 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800">Video Audio Extractor</h1>
+        <div className="relative z-10 w-full max-w-3xl mx-auto px-6 py-16 md:py-24 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mt-12 mb-6 text-gray-800">Video Audio Extractor</h1>
           <p className="text-xl text-gray-600 mb-12">Extract audio from videos quickly and securely</p>
 
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-8 mb-12">
@@ -202,63 +209,57 @@ export default function Home() {
               </div>
             )}
           </div>
-
+          
           {/* Features Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200">
               <div className="flex items-start space-x-3">
-                <svg className="w-6 h-6 text-pink-500 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <p className="text-gray-600">100% local processing for complete privacy</p>
+                <span className="text-2xl" role="img" aria-label="privacy">🔒</span>
+                <p className="text-gray-600 mt-1">100% local processing for complete privacy</p>
               </div>
             </div>
             <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200">
               <div className="flex items-start space-x-3">
-                <svg className="w-6 h-6 text-pink-500 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <p className="text-gray-600">Instant conversion with no upload waiting</p>
+                <span className="text-2xl" role="img" aria-label="speed">⚡️</span>
+                <p className="text-gray-600 mt-1">Instant conversion with no upload waiting</p>
               </div>
             </div>
             <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200">
               <div className="flex items-start space-x-3">
-                <svg className="w-6 h-6 text-pink-500 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <p className="text-gray-600">High-quality MP3 output</p>
+                <span className="text-2xl" role="img" aria-label="quality">🎵</span>
+                <p className="text-gray-600 mt-1">High-quality MP3 output</p>
               </div>
             </div>
             <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200">
               <div className="flex items-start space-x-3">
-                <svg className="w-6 h-6 text-pink-500 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <p className="text-gray-600">Supports most video formats</p>
+                <span className="text-2xl" role="img" aria-label="formats">🎥</span>
+                <p className="text-gray-600 mt-1">Supports most video formats</p>
               </div>
             </div>
           </div>
         </div>
+
+        {/* Footer */}
+        <footer className="w-full text-center py-6 text-sm text-gray-500 border-t border-gray-200 bg-white/80 backdrop-blur-sm mt-auto">
+          <p> 2024 Video Audio Extractor. All rights reserved.</p>
+          <div className="mt-2">
+            <a href="https://github.com/dacaiguoguo/video-audio-extractor" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               className="text-pink-500 hover:text-pink-700">
+              View on GitHub
+            </a>
+          </div>
+        </footer>
       </div>
 
-      {/* Footer */}
-      <footer className="w-full text-center py-6 text-sm text-gray-500 border-t border-gray-200 bg-white/80 backdrop-blur-sm">
-        <p> 2024 Video Audio Extractor. All rights reserved.</p>
-        <div className="mt-2">
-          <a href="https://github.com/dacaiguoguo/video-audio-extractor" 
-             target="_blank" 
-             rel="noopener noreferrer"
-             className="text-pink-500 hover:text-pink-700">
-            View on GitHub
-          </a>
-        </div>
-      </footer>
-
       {isLoading && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center backdrop-blur-sm z-50">
-          <div className="bg-white rounded-lg p-6 shadow-xl">
-            <div className="animate-spin rounded-full h-12 w-12 border-4 border-pink-500 border-t-transparent"></div>
-            <p className="mt-4 text-gray-600">Processing...</p>
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="bg-white rounded-lg p-8 shadow-xl flex flex-col items-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-4 border-pink-500 border-t-transparent"></div>
+              <p className="mt-4 text-gray-600">Processing...</p>
+            </div>
           </div>
         </div>
       )}

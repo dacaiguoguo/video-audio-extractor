@@ -5,8 +5,9 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: '视频音频提取器',
-  description: '在浏览器中提取视频中的音频',
+  title: 'Video Audio Extractor',
+  description:
+    'A web tool to extract audio from video files directly in the browser, without any server-side processing or uploading to a third-party service.',
 }
 
 export default function RootLayout({
