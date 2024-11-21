@@ -7,6 +7,7 @@ import { fetchFile, toBlobURL } from '@ffmpeg/util';
 export default function Home() {
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const ffmpegRef = useRef<FFmpeg | null>(null);
   const [isReady, setIsReady] = useState(false);
 
@@ -80,6 +81,38 @@ export default function Home() {
     }
   };
 
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('video/')) {
+      await convertToAudio({ target: { files: [file] } } as any);
+    } else {
+      setMessage('Please drop a video file');
+      setTimeout(() => setMessage(''), 3000);
+    }
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center bg-gradient-to-b from-gray-50 to-white">
       <div className="z-10 w-full max-w-3xl px-6 py-16 md:py-24">
@@ -110,21 +143,35 @@ export default function Home() {
 
           {isReady && (
             <div className="flex flex-col items-center gap-6">
-              <label className="w-full cursor-pointer group">
-                <div className="border-2 border-dashed border-gray-300 group-hover:border-blue-500 rounded-lg p-8 text-center transition-colors duration-200">
+              <label 
+                className="w-full cursor-pointer group"
+                onDragEnter={handleDragEnter}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+              >
+                <div className={`border-2 border-dashed ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300'} group-hover:border-blue-500 rounded-lg p-8 text-center transition-all duration-200`}>
                   <div className="mb-4">
-                    <svg className="w-12 h-12 mx-auto text-gray-400 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className={`w-12 h-12 mx-auto ${isDragging ? 'text-blue-500' : 'text-gray-400'} group-hover:text-blue-500`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                     </svg>
                   </div>
-                  <span className="text-lg text-gray-600 group-hover:text-blue-500">Select a video file</span>
-                  <p className="mt-2 text-sm text-gray-500">or drag and drop here</p>
+                  <span className={`text-lg ${isDragging ? 'text-blue-500' : 'text-gray-600'} group-hover:text-blue-500`}>
+                    {isDragging ? 'Drop your video here' : 'Select a video file'}
+                  </span>
+                  <p className={`mt-2 text-sm ${isDragging ? 'text-blue-400' : 'text-gray-500'}`}>
+                    or drag and drop here
+                  </p>
                   <input type='file' className="hidden" accept="video/*" onChange={convertToAudio} />
                 </div>
               </label>
               
               {message && (
-                <div className="w-full text-center py-3 px-4 rounded-lg bg-gray-50 text-gray-700">
+                <div className={`w-full text-center py-3 px-4 rounded-lg ${
+                  message.includes('失败') || message.includes('Please drop') 
+                    ? 'bg-red-50 text-red-700' 
+                    : 'bg-gray-50 text-gray-700'
+                }`}>
                   {message}
                 </div>
               )}
